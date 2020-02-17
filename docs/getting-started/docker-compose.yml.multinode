@@ -1,0 +1,91 @@
+version: '2'
+services:
+  indy_pool_1:
+    build:
+      context: ../../ci/
+      dockerfile: indy-pool-1.dockerfile
+      args:
+        pool_ip: '10.0.0.2'
+    image: indy_pool_1
+    container_name: indy_pool_1
+    working_dir: /home/indy
+    ports:
+      - "9701:9701"
+      - "9702:9702"
+    networks:
+      pool_network:
+        ipv4_address: 10.0.0.2
+    volumes:
+       - sandbox:/var/lib/indy/sandbox/
+  indy_pool_2:
+    build:
+      context: ../../ci/
+      dockerfile: indy-pool-2.dockerfile
+      args:
+        pool_ip: '10.0.0.3'
+    image: indy_pool_2
+    container_name: indy_pool_2
+    working_dir: /home/indy
+    ports:
+      - "9703:9703"
+      - "9704:9704"
+    networks:
+      pool_network:
+        ipv4_address: 10.0.0.3
+  indy_pool_3:
+    build:
+      context: ../../ci/
+      dockerfile: indy-pool-3.dockerfile
+      args:
+        pool_ip: '10.0.0.4'
+    image: indy_pool_3
+    container_name: indy_pool_3
+    working_dir: /home/indy
+    ports:
+      - "9705:9705"
+      - "9706:9706"
+    networks:
+      pool_network:
+        ipv4_address: 10.0.0.4
+  indy_pool_4:
+    build:
+      context: ../../ci/
+      dockerfile: indy-pool-4.dockerfile
+      args:
+        pool_ip: '10.0.0.5'
+    image: indy_pool_4
+    container_name: indy_pool_4
+    working_dir: /home/indy
+    ports:
+      - "9707:9707"
+      - "9708:9708"
+    networks:
+      pool_network:
+        ipv4_address: 10.0.0.5
+  # jupyter:
+  #   build:
+  #     context: .
+  #     dockerfile: getting-started.dockerfile
+  #   command: jupyter notebook --ip=0.0.0.0 --allow-root
+  #   image: getting-started
+  #   container_name: getting_started
+  #   working_dir: /home/indy
+  #   volumes:
+  #      - ./getting-started.ipynb:/home/indy/getting-started.ipynb
+  #      - sandbox:/home/indy/sandbox
+  #   ports:
+  #     - "8888:8888"
+  #   networks:
+  #     - pool_network
+  #   links:
+  #     - indy_pool
+networks:
+  pool_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        -
+          subnet: 10.0.0.0/24
+volumes:
+     sandbox:

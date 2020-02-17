@@ -27,15 +27,11 @@ services:
     build:
       context: .
       dockerfile: getting-started.dockerfile
-    command: jupyter notebook --ip=0.0.0.0 --allow-root 
+    command: jupyter notebook --ip=0.0.0.0
     image: getting-started
     container_name: getting_started
     working_dir: /home/indy
     volumes:
-       - ./demo-senario.ipynb:/home/indy/demo-senario.ipynb
-       - ./user-creation-benchmark.ipynb:/home/indy/user-creation-benchmark.ipynb
-       - ./certificate-creation-benchmark.ipynb:/home/indy/certificate-creation-benchmark.ipynb
-       - ./certificate-proof-benchmark.ipynb:/home/indy/certificate-proof-benchmark.ipynb
        - ./getting-started.ipynb:/home/indy/getting-started.ipynb
        - sandbox:/home/indy/sandbox
     ports:
